@@ -10,4 +10,9 @@ import io.qameta.allure.Feature;
 @Epic("零件模块")
 @Feature("零件信息")
 public class PartsTest extends BaseTest {
+    public void atset(){
+
+        System.out.println("添加登录功能添加登录功能添加登录功能添加登录功能添加登录功能");
+        return;
+    }
 }
