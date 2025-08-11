@@ -10,4 +10,5 @@ import io.qameta.allure.Feature;
 @Epic("零件模块")
 @Feature("零件信息")
 public class PartsTest extends BaseTest {
+
 }

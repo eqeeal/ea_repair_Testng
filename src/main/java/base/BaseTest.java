@@ -26,10 +26,11 @@ public class BaseTest {
     @BeforeMethod
     public void setUp() {
         System.out.println("==== 初始化浏览器 ====");
-        WebDriverManager.chromedriver().setup();
+
 //        WebDriverManager。FirefoxDriver.setup();
 //        WebDriverManager.edgedriver().setup();
 
+        WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
         driver.manage().window().maximize();
         driver.get("http://localhost:8081"); // 替换为实际URL
