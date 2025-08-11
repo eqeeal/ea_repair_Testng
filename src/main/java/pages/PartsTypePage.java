@@ -13,8 +13,11 @@ public class PartsTypePage extends BasePage{
 
 //    @FindBy(xpath = "//*[@id=\"el-id-7804-6\"]")
 //    @FindBy(className = "el-input__inner")
-    @FindBy(xpath = "//div[contains(@class, 'list_inp')]//input[contains(@class, 'el-input__inner') and @placeholder='类型']\"")
+//    @FindBy(xpath = "//div[contains(@class, 'list_inp')]//input[contains(@class, 'el-input__inner') and @placeholder='类型']")
+//    <input class="el-input__inner" type="text" autocomplete="off" tabindex="0" placeholder="类型" id="el-id-4747-26" spellcheck="false" data-ms-editor="true">
+    @FindBy(xpath = "//input[contains(@class,'el-input__inner') and @placeholder='类型']")
     private WebElement partsTypeSerarchInput;//搜索零件类型框
+
 
     @FindBy(xpath = "//*[@id=\"app\"]/section/div/main/div[3]/div[1]/div[1]/form/div[2]/button")
     private WebElement partsTypeSerarchBtn;//搜索零件类型按钮
@@ -37,7 +40,11 @@ public class PartsTypePage extends BasePage{
     @FindBy(xpath = "//*[@id=\"app\"]/section/div/main/div[3]/div[2]/div/div/div/header/span")
     private WebElement partsTypeAddTip;//添加零件类型输入框
 
-    @FindBy(xpath = "//*[@id=\"app\"]/section/div/main/div[3]/div[2]/div/div/div/footer/span/button[2]")
+//    @FindBy(xpath = "//button[span[text()='提交']]")
+//    @FindBy(xpath = "//span[text()='提交']/parent::button")
+    //button[contains(@class,'formModel_confirm')]
+//    @FindBy(xpath = "//button[contains(@class,'formModel_confirm')]")
+    @FindBy(xpath = "//button[contains(@class,'formModel_confirm') and span[normalize-space(text())='提交']]")
     private WebElement partsTypeSubmitBtn;//添加零件类型提交按钮
 
 //    @FindBy(xpath = "//*[@id=\"el-id-3061-74\"]")
@@ -68,6 +75,7 @@ public class PartsTypePage extends BasePage{
 
     //搜索零件类型功能
     public String serchPartsType(String partsType){
+
         wait.until(ExpectedConditions.visibilityOf(partsTypeSerarchInput));
         System.out.println("搜索零件类型为："+partsType);
         serachPartsTypeInput(partsType);
@@ -108,7 +116,7 @@ public class PartsTypePage extends BasePage{
 //        } catch (InterruptedException e) {
 //            throw new RuntimeException(e);
 //        }
-        clickPartsTypeSubmitBtn();
+        clickPartsTypeSubmitBtn();//点击提交
     }
 
     /**
