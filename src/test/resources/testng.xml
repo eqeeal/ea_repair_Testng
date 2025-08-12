@@ -2,26 +2,30 @@
 <suite name="Web Automation Suite">
     <test name="登录模块测试">
         <classes>
-            <class name="tests.LoginTest"/>
+<!--            <class name="tests.LoginTest"/>-->
         </classes>
     </test>
 
-    <test name="零件模块测试">
+    <test name="零件模块测试" preserve-order="true">
         <parameter name="username" value="admin"></parameter>
         <parameter name="password" value="admin"></parameter>
-        <parameter name="searchParts" value="川菜"></parameter>
-        <parameter name="addpartsType" value="川菜1"></parameter>
-        <groups>
-            <run>
-                <include name="smoke"></include>
-                <include name="partsType"></include>
-                <exclude name="handiwork"></exclude>
-            </run>
-        </groups>
+        <parameter name="searchParts" value="自行车"></parameter>
+        <parameter name="addpartsType" value="自行车1"></parameter>
+        <parameter name="updateparts_before" value="自行车1"></parameter>
+        <parameter name="updateparts_after" value="自行车2"></parameter>
+        <parameter name="delete_parts" value="自行车2"></parameter>
+<!--        <groups>-->
+<!--            <run>-->
+<!--                <include name="smoke"></include>-->
+<!--                <include name="partsType"></include>-->
+<!--                <exclude name="handiwork"></exclude>-->
+<!--            </run>-->
+<!--        </groups>-->
         <classes>
                 <class name="tests.PartsTest"/>
                 <class name="tests.PartsTypeTest"/>
         </classes>
+
     </test>
     <listeners>
         <listener class-name="io.qameta.allure.testng.AllureTestNg"/>

@@ -31,8 +31,14 @@ public class PartsTypePage extends BasePage{
     @FindBy(xpath = "//*[@id=\"app\"]/section/div/main/div[3]/div[1]/div[1]/div/button[3]")
     private WebElement partsTypeEditBtn;//编辑零件类型按钮
 
+    @FindBy(xpath = "//")
+    private WebElement updateRowPartsType;//选择需编辑的行
+
     @FindBy(xpath = "//*[@id=\"app\"]/section/div/main/div[3]/div[1]/div[1]/div/button[4]")
     private WebElement partsTypeDelBtn;//删除零件类型按钮
+
+    @FindBy(xpath = "/html/body/div[3]/div/div/div[3]/button[2]/span")
+    private WebElement delPartsCmfirmBtn;//删除确认按钮
 
     @FindBy(xpath = "//*[@id=\"app\"]/section/div/main/div[3]/div[1]/div[2]/div[1]/div[3]/div/div[1]/div/table/tbody/tr/td[3]")
     private WebElement partsTypeResult;//查询/修改的文本框内容
@@ -54,7 +60,20 @@ public class PartsTypePage extends BasePage{
 
     @FindBy(xpath = "//*[@id=\"app\"]/section/div/main/div[3]/div[2]/div/div/div/footer/span/button[1]")
     private WebElement partsCancelBtn;//取消按钮
+//    @FindBy(xpath = "//td[contains(@class, 'el-table_1_column_3') and div/text()='%s']")
+    @FindBy(xpath = "//*[@id=\"app\"]/section/div/main/div[3]/div[1]/div[2]/div[1]/div[3]/div/div[1]/div/table/tbody/tr[1]/td[3]")
+    private WebElement partsTypeFirstRow;//列表第一行3列
 
+//    @FindBy(xpath = "//input[contains(@class, 'el-input__inner') and @placeholder='类型']")
+    @FindBy(xpath = "/html/body/div[1]/section/div/main/div[3]/div[2]/div/div/div/div/form/div/div/div/div/div/div/input")
+    private WebElement updateInputContent;//修改输入框和添加输入框的元素结构高度相似，唯一区别是定位前是否有值，所以修改框可以用@value != '' 或则 string-length(@value) > 0
+
+//    @FindBy(xpath = "span[contains(@class,'el-table__empty-text')and text()='暂无数据']")
+//    @FindBy(xpath = "/html/body/div[1]/section/div/main/div[3]/div[1]/div[2]/div[1]/div[3]/div/div[1]/div/div/span")
+//    private WebElement notFoundPartsTypeResult;
+
+    @FindBy(xpath = "//*[@id=\"app\"]/section/div/main/div[3]/div[2]/div/div/div/footer/span/button[2]/span")
+    private WebElement sumbitUpdateBtn;
     //从BasePage继承的构造方法
     public PartsTypePage(WebDriver webDriver) {
         super(webDriver);
@@ -62,6 +81,7 @@ public class PartsTypePage extends BasePage{
 
     //输入零件类型内容
     public void serachPartsTypeInput(String partsType){
+        partsTypeSerarchInput.clear();
         partsTypeSerarchInput.sendKeys(partsType);
     }
 
@@ -74,25 +94,79 @@ public class PartsTypePage extends BasePage{
     }
 
     //搜索零件类型功能
-    public String serchPartsType(String partsType){
+//    public String serchPartsType(String partsType){
+//
+//
+//        wait.until(ExpectedConditions.visibilityOf(partsTypeSerarchInput));
+//        System.out.println("搜索零件类型为："+partsType);
+//        serachPartsTypeInput(partsType);
+//        try {
+//            Thread.sleep(1000);
+//        } catch (InterruptedException e) {
+//            throw new RuntimeException(e);
+//        }
+//        clickPartsTypeSerarchBtn();
+//        try {
+//            Thread.sleep(1000);
+//            if (!partsTypeResult.isDisplayed()){
+//                return partsTypeResult.getText();
+//            }
+//        } catch (InterruptedException e) {
+//            throw new RuntimeException(e);
+//        }
+//
+////        wait.until(ExpectedConditions.visibilityOf(partsTypeResult));//显示等待查询结果
+//        return "没有查询到结果";
+//    }
 
+    public String serchPartsType(String partsType) {
         wait.until(ExpectedConditions.visibilityOf(partsTypeSerarchInput));
-        System.out.println("搜索零件类型为："+partsType);
-        serachPartsTypeInput(partsType);
+        System.out.println("搜索零件类型为：" + partsType);
+        serachPartsTypeInput(partsType);//输入搜索内容
+
+        // 使用显式等待代替 Thread.sleep(1000)
+        wait.until(webDriver -> {
+            try {
+                Thread.sleep(100); // 微等待减少CPU消耗
+                return true;
+            } catch (InterruptedException e) {
+                return false;
+            }
+        });
+
+        clickPartsTypeSerarchBtn();//点击搜索按钮
+
+        // 再次使用显式等待
+        wait.until(webDriver -> {
+            try {
+                Thread.sleep(100);
+                return true;
+            } catch (InterruptedException e) {
+                return false;
+            }
+        });
+
+        // 安全处理元素状态
         try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+            // 首先检查元素是否存在于DOM中
+            if (webDriver.findElements(By.id(partsTypeResult.getAttribute("id"))).size() > 0) {//如果元素存在
+                // 然后检查元素是否可见
+                if (partsTypeResult.isDisplayed()) {//如果元素存在且可见
+                    return partsTypeResult.getText();
+                } else {
+                    // 元素存在但不可见的情况
+                    return "元素存在但不可见";
+                }
+            }
+        } catch (Exception e) {
+            // 处理其他可能的异常
+            System.out.println("搜索异常: " + e.getMessage());
         }
-        clickPartsTypeSerarchBtn();
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-//        wait.until(ExpectedConditions.visibilityOf(partsTypeResult));//显示等待查询结果
-        return partsTypeResult.getText();
+
+        // 如果以上条件都不满足，返回未找到的结果
+        return "没有查询到结果";
     }
+
 
     //清除搜索框内容功能
     public void clearPartsTypeSerarchInput(){
@@ -200,4 +274,46 @@ public void addPartsType(String partsType) {
     }
 }
 **/
+
+    //选中第一行数据
+    public void selectFirstRow(){
+        partsTypeFirstRow.click();
+    }
+
+    //点击编辑按钮
+    public void clickEditBtn(){
+        partsTypeEditBtn.click();
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    //获取修改输入框元素
+    public WebElement getUpdateInputContent(){
+        return updateInputContent;
+    }
+    //提交修改结果
+    public void clickUpdateSubmitBtn(){
+        sumbitUpdateBtn.click();
+    }
+
+    //获取搜索失败的元素提示
+    public WebElement getnotFoundPartsTypeResult(){
+//        return notFoundPartsTypeResult;
+        return null;
+    }
+
+
+    //点击删除按钮,进入删除页面
+    public void clickDeleteBtn(){
+        partsTypeDelBtn.click();
+    }
+
+    //确认删除页面
+    public void comfirmDeleteBtn(){
+        delPartsCmfirmBtn.click();
+    }
+
 }
