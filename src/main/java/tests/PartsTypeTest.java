@@ -38,9 +38,10 @@ public class PartsTypeTest extends BaseTest {
     }
 
 //    @Parameters("partsType")
-    @Test(description = "测试零件类型页面搜索功能",groups = {"smoke","partsType"})
+    @Test(description = "测试零件类型页面搜索功能",groups = {"smoke","partsType"},priority = 1)
     @Story("测试零件类型搜索功能")
     @Parameters({"username","password","searchParts"})
+//    String username,String password,String searchParts
     public void testSearchPartsType(String username,String password,String searchParts){
         LoginPage loginPage = new LoginPage(driver);
         loginPage.login(username,password);//先登录
@@ -50,15 +51,16 @@ public class PartsTypeTest extends BaseTest {
         PartsTypePage partsTypePage = new PartsTypePage(driver);
 
         String aimParts=searchParts;
-        String serchaResult=partsTypePage.serchPartsType(aimParts);
+        String serchaResult=partsTypePage.serchPartsType(searchParts);
 
-        Assert.assertEquals(serchaResult,aimParts,"验证零件类型搜索功能失败");
+        Assert.assertEquals(serchaResult,searchParts,"验证零件类型搜索功能失败");
         System.out.println("零件类型验证结果:"+(aimParts.contains(serchaResult)?"成功":"失败"));
     }
 
-    @Test(description = "测试零件类型页面添加功能",groups = {"smoke","partsType"})
+    @Test(description = "测试零件类型页面添加功能",groups = {"smoke","partsType"},priority = 2,dependsOnMethods = "testSearchPartsType")
     @Story("测试零件类型添加功能")
     @Parameters({"username", "password", "addpartsType"})
+//    String username, String password, String addpartsType
     public void testAddParstType(String username, String password, String addpartsType){
         LoginPage loginPage = new LoginPage(driver);
         loginPage.login(username,password);//先登录
@@ -87,8 +89,8 @@ public class PartsTypeTest extends BaseTest {
         System.out.println("零件类型验证结果:"+(aimParts.contains(partsResult)?"成功":"失败"));
     }
 
-    //测试零件类型的更行功能
-    @Test(description = "测试零件类型页面更新功能",groups = {"smoke","partsType"})
+    //测试零件类型的更新功能
+    @Test(description = "测试零件类型页面更新功能",groups = {"smoke","partsType"},priority = 4,dependsOnMethods = "testAddParstType")
     @Story("测试零件类型更新功能")
     @Parameters({"username","password","updateparts_before","updateparts_after"})
     public void testUpdatePartsType(String username,String password,String updateparts_before,String updateparts_after){
@@ -134,7 +136,7 @@ public class PartsTypeTest extends BaseTest {
     }
 
     //测试删除功能
-    @Test(description = "测试零件类型页面删除功能",groups = {"smoke","partsType"})
+    @Test(description = "测试零件类型页面删除功能",groups = {"smoke","partsType"},priority = 5,dependsOnMethods = "testUpdatePartsType")
     @Parameters({"username","password","delete_parts"})
     @Story("测试零件类型删除功能")
     public void testDeletePartsType(String username,String password,String delete_parts){

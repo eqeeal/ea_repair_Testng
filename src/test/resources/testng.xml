@@ -9,20 +9,20 @@
     <test name="零件模块测试" preserve-order="true">
         <parameter name="username" value="admin"></parameter>
         <parameter name="password" value="admin"></parameter>
-        <parameter name="searchParts" value="自行车"></parameter>
+        <parameter name="searchParts" value="电灯"></parameter>
         <parameter name="addpartsType" value="自行车1"></parameter>
         <parameter name="updateparts_before" value="自行车1"></parameter>
         <parameter name="updateparts_after" value="自行车2"></parameter>
         <parameter name="delete_parts" value="自行车2"></parameter>
-<!--        <groups>-->
-<!--            <run>-->
-<!--                <include name="smoke"></include>-->
-<!--                <include name="partsType"></include>-->
+        <groups>
+            <run>
+<!--                <include name="smoke,partsType></include>-->
+<!--                <include name=></include>-->
 <!--                <exclude name="handiwork"></exclude>-->
-<!--            </run>-->
-<!--        </groups>-->
+            </run>
+        </groups>
         <classes>
-                <class name="tests.PartsTest"/>
+<!--                <class name="tests.PartsTest"/>-->
                 <class name="tests.PartsTypeTest"/>
         </classes>
 

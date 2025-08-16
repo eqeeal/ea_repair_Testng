@@ -50,7 +50,8 @@ public class PartsTypePage extends BasePage{
 //    @FindBy(xpath = "//span[text()='提交']/parent::button")
     //button[contains(@class,'formModel_confirm')]
 //    @FindBy(xpath = "//button[contains(@class,'formModel_confirm')]")
-    @FindBy(xpath = "//button[contains(@class,'formModel_confirm') and span[normalize-space(text())='提交']]")
+//    @FindBy(xpath = "//button[contains(@class,'formModel_confirm') and span[normalize-space(text())='提交']]")
+    @FindBy(xpath = "/html/body/div[1]/section/div/main/div[3]/div[2]/div/div/div/footer/span/button[2]/span")
     private WebElement partsTypeSubmitBtn;//添加零件类型提交按钮
 
 //    @FindBy(xpath = "//*[@id=\"el-id-3061-74\"]")
@@ -127,7 +128,7 @@ public class PartsTypePage extends BasePage{
         // 使用显式等待代替 Thread.sleep(1000)
         wait.until(webDriver -> {
             try {
-                Thread.sleep(100); // 微等待减少CPU消耗
+                Thread.sleep(1000); // 微等待减少CPU消耗
                 return true;
             } catch (InterruptedException e) {
                 return false;
@@ -139,7 +140,7 @@ public class PartsTypePage extends BasePage{
         // 再次使用显式等待
         wait.until(webDriver -> {
             try {
-                Thread.sleep(100);
+                Thread.sleep(1000);
                 return true;
             } catch (InterruptedException e) {
                 return false;
@@ -149,7 +150,7 @@ public class PartsTypePage extends BasePage{
         // 安全处理元素状态
         try {
             // 首先检查元素是否存在于DOM中
-            if (webDriver.findElements(By.id(partsTypeResult.getAttribute("id"))).size() > 0) {//如果元素存在
+//            if (webDriver.findElements(By.id(partsTypeResult.getAttribute("id"))).size() > 0) {//如果元素存在
                 // 然后检查元素是否可见
                 if (partsTypeResult.isDisplayed()) {//如果元素存在且可见
                     return partsTypeResult.getText();
@@ -157,7 +158,7 @@ public class PartsTypePage extends BasePage{
                     // 元素存在但不可见的情况
                     return "元素存在但不可见";
                 }
-            }
+//            }
         } catch (Exception e) {
             // 处理其他可能的异常
             System.out.println("搜索异常: " + e.getMessage());
@@ -175,9 +176,10 @@ public class PartsTypePage extends BasePage{
 
     //添加零件类型功能
     public void addPartsType(String partsType){
-        partsTypeAddBtn.click();
-        wait.until(ExpectedConditions.elementToBeClickable(partsTypeInputSubmit));
+
         try {
+            partsTypeAddBtn.click();
+            wait.until(ExpectedConditions.elementToBeClickable(partsTypeInputSubmit));
             Thread.sleep(1000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
@@ -192,6 +194,7 @@ public class PartsTypePage extends BasePage{
 //        }
         clickPartsTypeSubmitBtn();//点击提交
     }
+
 
     /**
 public void addPartsType(String partsType) {

@@ -10,6 +10,7 @@ import org.openqa.selenium.support.ui.Sleeper;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import pages.BasePage;
 import pages.HomePage;
 import pages.LoginPage;
 import utils.ExcelDataProvider;
@@ -46,6 +47,7 @@ public class LoginTest extends BaseTest {
         Assert.isTrue(homePage.getLoginResult(),"登录成功验证失败");
         System.out.println("登录成功验证结果："+(homePage.getLoginResult()?"成功":"失败"));
     }
+
 
 
     @Test(description = "测试登录失败")
