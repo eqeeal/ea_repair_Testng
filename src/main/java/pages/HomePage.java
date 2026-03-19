@@ -28,6 +28,7 @@ public class HomePage extends BasePage{
     //获取登录结果
     public boolean getLoginResult(){
         System.out.println(welcomeMessage.getText());
+        System.out.println("test");
         if (welcomeMessage.getText().equals("欢迎使用 家电维修店的管理系统")){
             return true;
         }else return false;
